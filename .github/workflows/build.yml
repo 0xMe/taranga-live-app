@@ -1,2 +1,17 @@
-- name: automated-build-android-app-with-github-action
-   uses: amirisback/automated-build-android-app-with-github-action@2.2.4
+name: Android CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+       - name: automated-build-android-app-with-github-action
+         uses: amirisback/automated-build-android-app-with-github-action@2.2.4
