@@ -1,0 +1,15 @@
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="#FFAAB9CF"> <!-- FF8693AB Replace with your desired color code -->
+    <item android:id="@android:id/mask">
+        <shape android:shape="rectangle">
+            <corners android:radius="10dp" /> <!-- Adjust radius as needed -->
+            <solid android:color="?android:colorPrimary" />
+        </shape>
+    </item>
+    <item android:id="@android:id/background">
+        <shape android:shape="rectangle">
+            <corners android:radius="10dp" /> <!-- Adjust radius as needed -->
+            <solid android:color="#FF424242" />
+        </shape>
+    </item>
+</ripple>

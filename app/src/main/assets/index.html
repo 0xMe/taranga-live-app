@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>M3U8 Video Player</title>
+    <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #video {
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover;
+            display: none; /* Hide initially */
+        }
+
+        #interaction {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0); /* Transparent */
+            cursor: pointer;
+            z-index: 10;
+        }
+    </style>
+</head>
+<body>
+
+    <video id="video" controls></video>
+    <div id="interaction"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <script src="https://cdn.plyr.io/3.7.8/plyr.polyfilled.js"></script>
+    <script>
+        const video = document.getElementById('video');
+        const interaction = document.getElementById('interaction');
+        //const videoSrc = 'https://livetv.tarangplus.in/tarangtv-origin/live/tarangtv-origin/live_240p/chunks.m3u8';
+
+
+        const params = new URLSearchParams(window.location.search);
+        const videoSrc = params.get('url'); // Get 'url' parameter value
+
+        // Initialize Plyr
+        const player = new Plyr(video, {
+          controls: [
+          'play-large', // The large play button in the center
+          'rewind', // Rewind by the seek time (default 10 seconds)
+          'play', // Play/pause playback
+          'fast-forward', // Fast forward by the seek time (default 10 seconds)
+          'progress', // The progress bar and scrubber for playback and buffering
+          'current-time', // The current time of playback
+          'duration', // The full duration of the media
+          'mute', // Toggle mute
+          'settings', // Settings menu
+          ]
+         });
+
+
+        // Load video source with hls.js
+        if (Hls.isSupported()) {
+            const hls = new Hls();
+            hls.loadSource(videoSrc);
+            hls.attachMedia(video);
+            hls.on(Hls.Events.MANIFEST_PARSED, function() {
+                video.style.display = 'block'; // Show video element
+                interaction.click(); // Trigger the hidden click
+            });
+        } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+            video.src = videoSrc;
+            video.addEventListener('loadedmetadata', function() {
+                video.style.display = 'block'; // Show video element
+                interaction.click(); // Trigger the hidden click
+            });
+        }
+
+        // Add an event listener for the interaction click
+        interaction.addEventListener('click', function() {
+            video.play().then(() => {
+                // Request fullscreen after play starts
+                player.fullscreen.enter();
+            }).catch(error => {
+                console.error("Playback failed:", error);
+            });
+        });
+    </script>
+</body>
+</html>

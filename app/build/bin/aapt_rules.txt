@@ -1,0 +1,6 @@
+# Referenced at /storage/emulated/0/AideProjects/TarangLIVE/app/build/bin/injected/AndroidManifest.xml:52
+-keep class com.my.tarang.live.app.DebugActivity { <init>(); }
+# Referenced at /storage/emulated/0/AideProjects/TarangLIVE/app/build/bin/injected/AndroidManifest.xml:24
+-keep class com.my.tarang.live.app.MainActivity { <init>(); }
+# Referenced at /storage/emulated/0/AideProjects/TarangLIVE/app/build/bin/injected/AndroidManifest.xml:44
+-keep class com.my.tarang.live.app.PlayerActivity { <init>(); }
